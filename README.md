@@ -6,72 +6,73 @@
     Accuracy on test data is: 82.44
 
 ##  Model 
-    
-    
+ 
     model = Sequential()
     drop_out_val=0.25
     learning_rate_val=0.004
 
-    model.add(SeparableConv2D(64, kernel_size=(3, 3), strides=(1,1), padding="same", 
-                                 input_shape=(32, 32, 3), activation='relu', 
-                                 data_format="channels_last"))          #Output=32 |RF=3
-
-    model.add(BatchNormalization())#Output=32 |RF=3
-
-    model.add(SeparableConv2D(64, kernel_size=(3, 3), strides=(1,1), 
-                               padding="same", activation='relu',
-                               data_format="channels_last")) #Output=32 |RF=3
-
-    model.add(BatchNormalization())#Output=32 |RF=3
-    model.add(Dropout(drop_out_val))#Output=32 |RF=3
-
-    model.add(SeparableConv2D(64, kernel_size=(3, 3), strides=(1,1),  
-                              padding="same", activation='relu',
-                              data_format="channels_last")) #Output=32 |RF=7
+    model.add(SeparableConv2D(64, kernel_size=(3, 3), strides=(1,1), padding="same", input_shape=(32, 32, 3), activation='relu',data_format="channels_last")) #Output=32x32 |RF=3
+    model.add(BatchNormalization())#Output=32x32 |RF=3
+    #model.add(Dropout(drop_out_val))
 
 
-    model.add(BatchNormalization())#Output=32 |RF=7
-    model.add(Dropout(drop_out_val))#Output=32 |RF=7
+    #model.add(AveragePooling2D())
+    model.add(SeparableConv2D(64, kernel_size=(3, 3), strides=(1,1), padding="same", activation='relu',data_format="channels_last")) #Output=32x32 |RF=3
+    model.add(BatchNormalization())#Output=32x32 |RF=3
+    model.add(Dropout(drop_out_val))#Output=32x32 |RF=3
+
+    model.add(SeparableConv2D(64, kernel_size=(3, 3), strides=(1,1), padding="same", activation='relu',data_format="channels_last")) #Output=32x32 |RF=7
+    model.add(BatchNormalization())#Output=32x32 |RF=7
+    model.add(Dropout(drop_out_val))#Output=32x32 |RF=7
+
+    #model.add(SeparableConv2D(64, kernel_size=(3, 3), strides=(2,2),    activation='relu',data_format="channels_last"))
+    #model.add(BatchNormalization())
+    #model.add(Dropout(drop_out_val))
+
+    #model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(AveragePooling2D())                   #Output=16x16 |RF=8
+
+    model.add(SeparableConv2D(128, kernel_size=(3, 3), strides=(1,1), padding="same",  activation='relu',data_format="channels_last")) #Output=16x16 |RF=12
+    model.add(BatchNormalization())#Output=16x16 |RF=12
+    model.add(Dropout(drop_out_val))#Output=16x16 |RF=12
+
+    model.add(SeparableConv2D(128, kernel_size=(3, 3), strides=(1,1),  padding="same", activation='relu',data_format="channels_last")) #Output=16x16 |RF=16
+    model.add(BatchNormalization())#Output=16x16 |RF=16
+    model.add(Dropout(drop_out_val))#Output=16x16 |RF=16
+
+    model.add(SeparableConv2D(128, kernel_size=(3, 3), strides=(1,1),  padding="same", activation='relu',data_format="channels_last")) #Output=16x16 |RF=20
+    model.add(BatchNormalization())#Output=16x16 |RF=20
+    model.add(Dropout(drop_out_val))#Output=16x16 |RF=20
 
 
-    model.add(AveragePooling2D())                   #Output=16 |RF=8
-
-    model.add(SeparableConv2D(128, kernel_size=(3, 3), 
-                              strides=(1,1), padding="same",  
-                              activation='relu',data_format="channels_last")) #Output=16 |RF=12
-    model.add(BatchNormalization())#Output=16 |RF=12
-    model.add(Dropout(drop_out_val))#Output=16 |RF=12
-
-    model.add(SeparableConv2D(128, kernel_size=(3, 3), strides=(1,1),  
-                               padding="same", activation='relu',
-                               data_format="channels_last")) #Output=16 |RF=16
+    #model.add(MaxPooling2D(pool_size=(2, 2)))
+    #model.add(AveragePooling2D())
+    model.add(SeparableConv2D(10, kernel_size=(3, 3), strides=(2,2),   activation='relu',data_format="channels_last")) #Output=7x7 |RF=24
+    model.add(BatchNormalization())#Output=7x7 |RF=24
+    model.add(Dropout(drop_out_val))#Output=7x7 |RF=24
 
 
-    model.add(BatchNormalization())#Output=16 |RF=16
-    model.add(Dropout(drop_out_val))#Output=16 |RF=16
-
-    model.add(SeparableConv2D(128, kernel_size=(3, 3), strides=(1,1),  
-                              padding="same", activation='relu',
-                              data_format="channels_last")) #Output=16 |RF=20
-    model.add(BatchNormalization())#Output=16 |RF=20
-    model.add(Dropout(drop_out_val))#Output=16 |RF=20
+    model.add(AveragePooling2D()) #Output=3x3 |RF=28
+    model.add(SeparableConv2D(10, kernel_size=(3, 3), strides=(1,1),   activation='relu',data_format="channels_last")) #Output=1x1 |RF=44
+    #model.add(BatchNormalization())
 
 
-    model.add(SeparableConv2D(10, kernel_size=(3, 3), strides=(2,2),
-                              activation='relu',data_format="channels_last")) #Output=7 |RF=24
-    model.add(BatchNormalization())#Output=7 |RF=24
-    model.add(Dropout(drop_out_val))#Output=7 |RF=24
 
+    #model.add(BatchNormalization())
+    #model.add(Dropout(drop_out_val))
 
-    model.add(AveragePooling2D()) #Output=3 |RF=28
-    model.add(SeparableConv2D(10, kernel_size=(3, 3), strides=(1,1),  
-                              activation='relu',data_format="channels_last")) #Output=1 |RF=44
+    #model.add(AveragePooling2D())
+    #model.add(AveragePooling2D())
+    #model.add(MaxPooling2D(pool_size=(2, 2)))
+
+    #model.add(Convolution2D(10, 1, activation='relu'))
+    #model.add(Convolution2D(10, 30, activation='relu'))
 
     model.add(Flatten()) #Output 10
     model.add(Activation('softmax'))#Output 10
-    # Compile the model
-    model.compile(optimizer=Adam(lr=learning_rate_val), loss='categorical_crossentropy', metrics=['accuracy'])
-
+# Compile the model
+#model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+model.compile(optimizer=Adam(lr=learning_rate_val), loss='categorical_crossentropy', metrics=['accuracy'])
 
 
 #   Final Accuracy 
