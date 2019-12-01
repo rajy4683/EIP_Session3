@@ -291,7 +291,11 @@
     This Model took 644.40 seconds to train
 
     Accuracy on test data is: 84.41
-# 
-
+### Additional Information
+    Total params: 58,965
+    Trainable params: 57,793
+    Non-trainable params: 1,172
+    This Model took 644.40 seconds to train
+    
 
 
